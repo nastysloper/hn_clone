@@ -1,0 +1,16 @@
+<div class="container">
+  <h1><%= @user.name %> </h1>
+  <table class="posts">
+    <th>Your posts</th>
+    <% @user.authored_posts.each do |post| %>
+    <tr><td><a href="/post/<%= post.id %>"><%= post.title %></a></td></tr>
+    <% end %>
+  </table>
+  <table class="posts">
+    <th>Your Comments</th>
+    <% @user.comments.each do |comment| %>
+    <tr><td><a href="/post/<%= comment.post_id %>"><%= comment.text %> </a></td></tr>
+    <% end %>
+  </table>
+</div>
+ 

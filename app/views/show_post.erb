@@ -1,0 +1,12 @@
+<div class="container">
+<h1><%= @post.title  %></h1>
+By: <%= @post.author.name %><br>
+<%= @post.body %>
+<ul>
+<% @post.comments.each do |comment| %>
+  <li><%= comment.text %></li>
+<% end %>
+</ul>
+<br>
+Posted at: <%= @post.created_at %>
+</div>
