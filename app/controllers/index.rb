@@ -3,6 +3,19 @@ get '/' do
   erb :index
 end
 
+get '/private' do
+
+  if current_user
+    # successfully authenticated; set up session and redirect
+    session[:user_id] = user.id
+    redirect '/'
+  else
+    # an error occurred, re-render the sign-in form, displaying an error
+    @error = "Invalid email or password."
+    erb :sign_in
+  end
+end
+
 #----------- SESSIONS -----------
 
 get '/sessions/new' do
@@ -26,12 +39,12 @@ post '/sessions' do
   end
 end
 
-delete '/sessions/:id' do
-  # sign-out -- invoked via AJAX
+get '/sessions/:id' do
   return 401 unless params[:id].to_i == session[:user_id].to_i
   session.clear
-  200
+  redirect '/'
 end
+
 
 
 #----------- USERS -----------
@@ -64,7 +77,16 @@ end
 
 #-------------- POSTS -----------------
 
-get '/post/:post_id' do
+get '/post/create/new' do
+  erb :create_post
+end
+
+get '/post/find/:post_id' do
   @post = Post.find(params[:post_id])
   erb :show_post
+end
+
+post '/post/new/create' do
+  puts params
+  Post.create(params)
 end
